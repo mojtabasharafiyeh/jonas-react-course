@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import ReactDOM, { createRoot } from 'react-dom/client'
-import './index.css'
 
 function Step() {
   const [step, setstep] = useState(1)
@@ -8,7 +7,7 @@ function Step() {
     setstep((cur) => cur + 1)
   }
   function downStepHandler() {
-    step > 1 && setstep((cur) => cur - 1)
+    setstep((cur) => cur - 1)
   }
   const [count, setcount] = useState(0)
   function upHandler() {
