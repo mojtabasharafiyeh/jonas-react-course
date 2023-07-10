@@ -1,28 +1,50 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './index.css'
 const initialItems = [
   { id: 1, description: 'Passports', quantity: 2, packed: false },
-  { id: 2, description: 'Socks', quantity: 12, packed: false },
-  { id: 2, description: 'Socks', quantity: 12, packed: false },
-  { id: 2, description: 'Socks', quantity: 12, packed: false },
-  { id: 2, description: 'Socks', quantity: 12, packed: false },
-  { id: 2, description: 'Socks', quantity: 12, packed: false },
-  { id: 2, description: 'Socks', quantity: 12, packed: false },
-  { id: 2, description: 'Socks', quantity: 12, packed: false },
   { id: 2, description: 'Socks', quantity: 12, packed: true },
 ]
-const mystyle = {
-  listStyleType: 'none',
-}
 
 function Logo() {
   return <h1>🌴Far Away 💼</h1>
 }
 function Form() {
+  const [description, setDescription] = useState('')
+  const [select, setSelect] = useState(1)
+  function submitHandler(e) {
+    e.preventDefault()
+    const newItem = { description, select, packed: false, id: Date.now() }
+    console.log(newItem)
+    setDescription('')
+    setSelect(1)
+  }
   return (
-    <div className='add-form'>
+    <form className='add-form' onSubmit={submitHandler}>
       <h3>what do you need for your😍 trip</h3>
-    </div>
+      <select
+        value={select}
+        onChange={(e) => {
+          return setSelect(Number(e.target.value))
+        }}
+      >
+        {Array.from({ length: 20 }, (_, i) => {
+          return i + 1
+        }).map((i) => (
+          <option value={i} key={i}>
+            {i}
+          </option>
+        ))}
+      </select>
+      <input
+        type='text'
+        placeholder='item....'
+        value={description}
+        onChange={(e) => {
+          return setDescription(e.target.value)
+        }}
+      ></input>
+      <button>add</button>
+    </form>
   )
 }
 function PackingList() {
@@ -30,7 +52,7 @@ function PackingList() {
     <div className='list '>
       <ul className='con'>
         {initialItems.map((item) => (
-          <Item item={item} />
+          <Item item={item} key={item.id} />
         ))}
       </ul>
     </div>
