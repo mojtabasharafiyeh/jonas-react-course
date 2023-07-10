@@ -11,6 +11,10 @@ const initialItems = [
   { id: 2, description: 'Socks', quantity: 12, packed: false },
   { id: 2, description: 'Socks', quantity: 12, packed: true },
 ]
+const mystyle = {
+  listStyleType: 'none',
+}
+
 function Logo() {
   return <h1>🌴Far Away 💼</h1>
 }
@@ -23,8 +27,8 @@ function Form() {
 }
 function PackingList() {
   return (
-    <div className='list'>
-      <ul>
+    <div className='list '>
+      <ul className='con'>
         {initialItems.map((item) => (
           <Item item={item} />
         ))}
