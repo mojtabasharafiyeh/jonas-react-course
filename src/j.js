@@ -31,7 +31,7 @@ function Form(props) {
   function submitHandler(e) {
     e.preventDefault()
     const newItem = { description, select, packed: false, id: Date.now() }
-    props.onaddNewItem(newItem)
+    props.addNewItem(newItem)
     console.log(newItem)
     setDescription('')
     setSelect(1)
@@ -81,7 +81,7 @@ function Item({ item }) {
   return (
     <li>
       <span style={item.packed ? { textDecoration: 'line-through' } : {}}>
-        {item.select}
+        {item.quantity}
       </span>
       <span>{item.description}</span>
       <button>🔴</button>
