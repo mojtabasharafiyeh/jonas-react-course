@@ -81,13 +81,21 @@ function PackingList({ item, deleteHandler }) {
   )
 }
 function Item({ item, deleteHandler }) {
+  const [check, setcheck] = useState({})
+  function checkboxHandler() {
+    setcheck((item) =>
+      item.hasOwnProperty('textDecoration')
+        ? {}
+        : { textDecoration: 'line-through' },
+    )
+  }
   return (
     <li>
-      <span style={item.packed ? { textDecoration: 'line-through' } : {}}>
-        {item.select}
-      </span>
-      <span>{item.description}</span>
+      <input type='checkbox' onClick={checkboxHandler}></input>
+      <span style={check}>{item.select}</span>
+      <span style={check}>{item.description}</span>
       <button
+        style={check}
         onClick={() => {
           return deleteHandler(item.id)
         }}
