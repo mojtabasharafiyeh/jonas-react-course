@@ -11,11 +11,16 @@ export default function App() {
       return [...item, i]
     })
   }
+  function deleteHandler(id) {
+    setNewItem((i) => {
+      return i.filter((x) => x.id !== id)
+    })
+  }
   return (
     <div className='app'>
       <Logo></Logo>
       <Form onaddNewItem={addNewItem}></Form>
-      <PackingList item={newItem}></PackingList>
+      <PackingList deleteHandler={deleteHandler} item={newItem}></PackingList>
       <Stats></Stats>
     </div>
   )
@@ -24,14 +29,13 @@ export default function App() {
 function Logo() {
   return <h1>🌴Far Away 💼</h1>
 }
-function Form(props) {
-  console.log(props)
+function Form({ onaddNewItem }) {
   const [description, setDescription] = useState('')
   const [select, setSelect] = useState(1)
   function submitHandler(e) {
     e.preventDefault()
     const newItem = { description, select, packed: false, id: Date.now() }
-    props.onaddNewItem(newItem)
+    onaddNewItem(newItem)
     console.log(newItem)
     setDescription('')
     setSelect(1)
@@ -65,26 +69,31 @@ function Form(props) {
     </form>
   )
 }
-function PackingList(props) {
-  console.log(props)
+function PackingList({ item, deleteHandler }) {
   return (
     <div className='list '>
       <ul className='con'>
-        {props.item.map((item) => (
-          <Item item={item} key={item.id} />
+        {item.map((item) => (
+          <Item deleteHandler={deleteHandler} item={item} key={item.id} />
         ))}
       </ul>
     </div>
   )
 }
-function Item({ item }) {
+function Item({ item, deleteHandler }) {
   return (
     <li>
       <span style={item.packed ? { textDecoration: 'line-through' } : {}}>
         {item.select}
       </span>
       <span>{item.description}</span>
-      <button>🔴</button>
+      <button
+        onClick={() => {
+          return deleteHandler(item.id)
+        }}
+      >
+        🔴
+      </button>
     </li>
   )
 }
