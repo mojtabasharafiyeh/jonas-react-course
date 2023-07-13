@@ -11,17 +11,30 @@ export default function App() {
       return [...item, i]
     })
   }
+  const length = newItem.length
+  const packed = newItem.filter((item) => item.packed === true).length
   function deleteHandler(id) {
     setNewItem((i) => {
       return i.filter((x) => x.id !== id)
     })
   }
+  function checkboxHandler(id) {
+    setNewItem((x) =>
+      x.map((item) =>
+        item.id === id ? { ...item, packed: !item.packed } : item,
+      ),
+    )
+  }
   return (
     <div className='app'>
       <Logo></Logo>
       <Form onaddNewItem={addNewItem}></Form>
-      <PackingList deleteHandler={deleteHandler} item={newItem}></PackingList>
-      <Stats></Stats>
+      <PackingList
+        oncheckbox={checkboxHandler}
+        deleteHandler={deleteHandler}
+        item={newItem}
+      ></PackingList>
+      <Stats length={length} packed={packed}></Stats>
     </div>
   )
 }
@@ -69,33 +82,37 @@ function Form({ onaddNewItem }) {
     </form>
   )
 }
-function PackingList({ item, deleteHandler }) {
+function PackingList({ item, deleteHandler, oncheckbox }) {
   return (
     <div className='list '>
       <ul className='con'>
         {item.map((item) => (
-          <Item deleteHandler={deleteHandler} item={item} key={item.id} />
+          <Item
+            oncheckbox={oncheckbox}
+            deleteHandler={() => deleteHandler(item.id)}
+            item={item}
+            key={item.id}
+          />
         ))}
       </ul>
     </div>
   )
 }
-function Item({ item, deleteHandler }) {
-  const [check, setcheck] = useState({})
-  function checkboxHandler() {
-    setcheck((item) =>
-      item.hasOwnProperty('textDecoration')
-        ? {}
-        : { textDecoration: 'line-through' },
-    )
-  }
+function Item({ item, deleteHandler, oncheckbox }) {
   return (
     <li>
-      <input type='checkbox' onClick={checkboxHandler}></input>
-      <span style={check}>{item.select}</span>
-      <span style={check}>{item.description}</span>
+      <input
+        type='checkbox'
+        onChange={() => oncheckbox(item.id)}
+        value={item.packed}
+      ></input>
+      <span style={item.packed ? { textDecoration: 'line-through' } : {}}>
+        {item.select}
+      </span>
+      <span style={item.packed ? { textDecoration: 'line-through' } : {}}>
+        {item.description}
+      </span>
       <button
-        style={check}
         onClick={() => {
           return deleteHandler(item.id)
         }}
@@ -105,10 +122,13 @@ function Item({ item, deleteHandler }) {
     </li>
   )
 }
-function Stats() {
+function Stats({ length, packed }) {
   return (
     <footer className='stats'>
-      <em>you have x item</em>
+      <em>
+        you have {length} item on your list and you already packed {packed}(
+        {(packed / length) * 100}%)
+      </em>
     </footer>
   )
 }
