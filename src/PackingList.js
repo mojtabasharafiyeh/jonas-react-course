@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
 import { Item } from './Item'
 
-export function PackingList({ item, deleteHandler, oncheckbox }) {
+export function PackingList({
+  item,
+  deleteHandler,
+  oncheckbox,
+  onclearLisrHandler,
+}) {
   const [select, setselect] = useState('input')
   let sorted
   if (select === 'input') sorted = item
@@ -27,11 +32,14 @@ export function PackingList({ item, deleteHandler, oncheckbox }) {
           />
         ))}
       </ul>
-      <select className='actions' value={select} onChange={selectHandler}>
-        <option value='input'>ordered by input</option>
-        <option value='description'>ordered by description</option>
-        <option value='packed'>ordered by packed</option>
-      </select>
+      <div className='actions'>
+        <select value={select} onChange={selectHandler}>
+          <option value='input'>ordered by input</option>
+          <option value='description'>ordered by description</option>
+          <option value='packed'>ordered by packed</option>
+        </select>
+        <button onClick={onclearLisrHandler}>clear list </button>
+      </div>
     </div>
   )
 }

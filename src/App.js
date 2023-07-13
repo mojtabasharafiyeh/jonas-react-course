@@ -4,10 +4,6 @@ import { Logo } from './Logo'
 import { Form } from './Form'
 import { PackingList } from './PackingList'
 import { Stats } from './Stats'
-// const initialItems = [
-//   { id: 1, description: 'Passports', quantity: 2, packed: false },
-//   { id: 2, description: 'Socks', quantity: 12, packed: true },
-// ]
 export default function App() {
   const [newItem, setNewItem] = useState([])
   function addNewItem(i) {
@@ -29,6 +25,9 @@ export default function App() {
       ),
     )
   }
+  function clearLisrHandler() {
+    setNewItem([])
+  }
   return (
     <div className='app'>
       <Logo></Logo>
@@ -37,6 +36,7 @@ export default function App() {
         oncheckbox={checkboxHandler}
         deleteHandler={deleteHandler}
         item={newItem}
+        onclearLisrHandler={clearLisrHandler}
       ></PackingList>
       <Stats length={length} packed={packed}></Stats>
     </div>
