@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import './index.css'
-const initialItems = [
-  { id: 1, description: 'Passports', quantity: 2, packed: false },
-  { id: 2, description: 'Socks', quantity: 12, packed: true },
-]
+// const initialItems = [
+//   { id: 1, description: 'Passports', quantity: 2, packed: false },
+//   { id: 2, description: 'Socks', quantity: 12, packed: true },
+// ]
 export default function App() {
   const [newItem, setNewItem] = useState([])
   function addNewItem(i) {
@@ -49,7 +49,7 @@ function Form({ onaddNewItem }) {
     e.preventDefault()
     const newItem = { description, select, packed: false, id: Date.now() }
     onaddNewItem(newItem)
-    console.log(newItem)
+    // console.log(newItem)
     setDescription('')
     setSelect(1)
   }
@@ -83,10 +83,23 @@ function Form({ onaddNewItem }) {
   )
 }
 function PackingList({ item, deleteHandler, oncheckbox }) {
+  const [select, setselect] = useState('input')
+  let sorted
+  if (select === 'input') sorted = item
+  if (select === 'description')
+    sorted = item
+      .slice()
+      .sort((a, b) => a.description.localeCompare(b.description))
+  if (select === 'packed')
+    sorted = item.slice().sort((a, b) => Number(a.packed) - Number(b.packed))
+  // console.log(sorted)
+  function selectHandler(e) {
+    setselect(e.target.value)
+  }
   return (
     <div className='list '>
       <ul className='con'>
-        {item.map((item) => (
+        {sorted.map((item) => (
           <Item
             oncheckbox={oncheckbox}
             deleteHandler={() => deleteHandler(item.id)}
@@ -95,6 +108,11 @@ function PackingList({ item, deleteHandler, oncheckbox }) {
           />
         ))}
       </ul>
+      <select className='actions' value={select} onChange={selectHandler}>
+        <option value='input'>ordered by input</option>
+        <option value='description'>ordered by description</option>
+        <option value='packed'>ordered by packed</option>
+      </select>
     </div>
   )
 }
