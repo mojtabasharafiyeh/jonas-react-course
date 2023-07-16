@@ -1,12 +1,19 @@
 import { useState } from 'react'
 import BillCalculator from './BillCalculator'
 import TipCalculator from './TipCalculator'
+import Reset from './Reset'
+import Output from './Output'
 
 export default function App() {
-  const [bill, setbill] = useState(null)
+  const [bill, setbill] = useState('')
   const [select, setselect] = useState(0)
   const [select2, setselect2] = useState(0)
   const tip = (select * bill) / 100 + (select2 * bill) / 100
+  function resetHandler() {
+    setbill('')
+    setselect(0)
+    setselect2(0)
+  }
   function changeHandler(e) {
     setbill(+e.target.value)
   }
@@ -34,10 +41,13 @@ export default function App() {
         select={select2}
         text='how did your friend like the service?'
       />
-      <p>
-        you pay ${bill + tip} (${bill}+$
-        {tip}tip)
-      </p>
+      {bill > 0 && (
+        <>
+          {' '}
+          <Output bill={bill} tip={tip} />
+          <Reset onreset={resetHandler} />
+        </>
+      )}
     </>
   )
 }
