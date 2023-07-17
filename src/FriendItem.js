@@ -1,5 +1,5 @@
 import Button from './Button'
-export function FriendItem({ item }) {
+export function FriendItem({ item, onclickButtonHandler }) {
   return (
     <li>
       <img src={item.image} alt={item.name} />
@@ -15,7 +15,9 @@ export function FriendItem({ item }) {
         </p>
       )}
       {item.balance === 0 && <p>you and {item.name} are even</p>}
-      <Button>select</Button>
+      <Button onclickButtonHandler={() => onclickButtonHandler(item.id)}>
+        select
+      </Button>
     </li>
   )
 }

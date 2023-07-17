@@ -35,10 +35,16 @@ export default function App() {
   function hideFormHandler() {
     setShowform(false)
   }
+  function clickHandler(id) {
+    console.log(id)
+  }
   return (
     <div className='app'>
       <div className='sidebar'>
-        <FriendList data={data} />
+        <FriendList
+          onclickButtonHandler={(id) => clickHandler(id)}
+          data={data}
+        />
         {showForm ? (
           <>
             {' '}

@@ -1,6 +1,6 @@
 export default function Button({ children, onclickButtonHandler }) {
   return (
-    <button onClick={onclickButtonHandler} className='button'>
+    <button onClick={(e) => onclickButtonHandler(e)} className='button'>
       {children}
     </button>
   )
