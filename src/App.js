@@ -1,6 +1,7 @@
 import { FriendList } from './FriendList'
 import { AddFriend } from './AddFriend'
 import Button from './Button'
+import { useState } from 'react'
 
 export const initialFriends = [
   {
@@ -23,11 +24,16 @@ export const initialFriends = [
   },
 ]
 export default function App() {
+  const [data, setData] = useState(initialFriends)
+  function setdataHandler(x) {
+    console.log(x)
+    setData(x)
+  }
   return (
     <div className='app'>
       <div className='sidebar'>
-        <FriendList data={initialFriends} />
-        <AddFriend></AddFriend>
+        <FriendList data={data} />
+        <AddFriend data={data} onsetdata={setdataHandler}></AddFriend>
         <Button>Add friend</Button>
       </div>
       <FormSplitBill></FormSplitBill>

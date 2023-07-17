@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Button from './Button'
 
-export function AddFriend() {
+export function AddFriend({ data, onsetdata }) {
   const [name, setName] = useState('')
   const [image, setImage] = useState('https://i.pravatar.cc/48')
   function handlesubmit(e) {
@@ -17,6 +17,9 @@ export function AddFriend() {
     console.log(NewFriend)
     setName('')
     setImage('https://i.pravatar.cc/48')
+    const dataChandge = data.slice()
+    const dataChange2 = [...dataChandge, NewFriend]
+    onsetdata(dataChange2)
   }
   return (
     <form className='form-add-friend' onSubmit={handlesubmit}>
