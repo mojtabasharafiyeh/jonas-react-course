@@ -25,15 +25,29 @@ export const initialFriends = [
 ]
 export default function App() {
   const [data, setData] = useState(initialFriends)
+  const [showForm, setShowform] = useState(false)
   function setdataHandler(dataPassed) {
     setData((data) => [...data, dataPassed])
+  }
+  function showFormHandler() {
+    setShowform(true)
+  }
+  function hideFormHandler() {
+    setShowform(false)
   }
   return (
     <div className='app'>
       <div className='sidebar'>
         <FriendList data={data} />
-        <AddFriend data={data} onsetdata={setdataHandler}></AddFriend>
-        <Button>Add friend</Button>
+        {showForm ? (
+          <>
+            {' '}
+            <AddFriend data={data} onsetdata={setdataHandler}></AddFriend>
+            <Button onclickButtonHandler={hideFormHandler}>close</Button>
+          </>
+        ) : (
+          <Button onclickButtonHandler={showFormHandler}>Add friend</Button>
+        )}
       </div>
       <FormSplitBill></FormSplitBill>
     </div>
