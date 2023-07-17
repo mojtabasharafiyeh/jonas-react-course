@@ -25,9 +25,8 @@ export const initialFriends = [
 ]
 export default function App() {
   const [data, setData] = useState(initialFriends)
-  function setdataHandler(x) {
-    console.log(x)
-    setData(x)
+  function setdataHandler(dataPassed) {
+    setData((data) => [...data, dataPassed])
   }
   return (
     <div className='app'>

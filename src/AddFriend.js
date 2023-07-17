@@ -10,16 +10,13 @@ export function AddFriend({ data, onsetdata }) {
     if (!name || !image) return
     const NewFriend = {
       name,
-      image,
+      image: `${image}?=${id}`,
       id,
       balance: 0,
     }
-    console.log(NewFriend)
     setName('')
     setImage('https://i.pravatar.cc/48')
-    const dataChandge = data.slice()
-    const dataChange2 = [...dataChandge, NewFriend]
-    onsetdata(dataChange2)
+    onsetdata(NewFriend)
   }
   return (
     <form className='form-add-friend' onSubmit={handlesubmit}>
