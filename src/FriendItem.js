@@ -15,9 +15,7 @@ export function FriendItem({ item, onclickButtonHandler }) {
         </p>
       )}
       {item.balance === 0 && <p>you and {item.name} are even</p>}
-      <Button onclickButtonHandler={() => onclickButtonHandler(item.id)}>
-        select
-      </Button>
+      <Button onClick={() => onclickButtonHandler(item.name)}>select</Button>
     </li>
   )
 }

@@ -7,8 +7,9 @@ export function FriendList({ data, onclickButtonHandler }) {
         {' '}
         {data.map((item) => (
           <FriendItem
-            onclickButtonHandler={(id) => onclickButtonHandler(id)}
+            onclickButtonHandler={onclickButtonHandler}
             item={item}
+            key={item.id}
           />
         ))}
       </ul>

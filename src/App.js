@@ -2,6 +2,7 @@ import { FriendList } from './FriendList'
 import { AddFriend } from './AddFriend'
 import Button from './Button'
 import { useState } from 'react'
+import { FormSplitBill } from './FormSplitBill'
 
 export const initialFriends = [
   {
@@ -26,6 +27,7 @@ export const initialFriends = [
 export default function App() {
   const [data, setData] = useState(initialFriends)
   const [showForm, setShowform] = useState(false)
+  const [selectedFriend, setSelectedFriend] = useState(null)
   function setdataHandler(dataPassed) {
     setData((data) => [...data, dataPassed])
   }
@@ -35,46 +37,26 @@ export default function App() {
   function hideFormHandler() {
     setShowform(false)
   }
-  function clickHandler(id) {
-    console.log(id)
+  function clickButtonHandler(name) {
+    setSelectedFriend(name)
   }
   return (
     <div className='app'>
       <div className='sidebar'>
-        <FriendList
-          onclickButtonHandler={(id) => clickHandler(id)}
-          data={data}
-        />
+        <FriendList data={data} onclickButtonHandler={clickButtonHandler} />
         {showForm ? (
           <>
             {' '}
             <AddFriend data={data} onsetdata={setdataHandler}></AddFriend>
-            <Button onclickButtonHandler={hideFormHandler}>close</Button>
+            <Button onClick={hideFormHandler}>close</Button>
           </>
         ) : (
-          <Button onclickButtonHandler={showFormHandler}>Add friend</Button>
+          <Button onClick={showFormHandler}>Add friend</Button>
         )}
       </div>
-      <FormSplitBill></FormSplitBill>
+      {selectedFriend && (
+        <FormSplitBill selectedFriend={selectedFriend}></FormSplitBill>
+      )}
     </div>
-  )
-}
-function FormSplitBill() {
-  return (
-    <form className='form-split-bill'>
-      <h2>split a bill with x</h2>
-      <label>💲bill value</label>
-      <input type='text'></input>
-      <label> 👱🏽‍♂️your expense </label>
-      <input type='text'></input>
-      <label> 👫x's expence</label>
-      <input type='text' disabled></input>
-      <label>who is paying the bill?</label>
-      <select>
-        <option value='user'>you</option>
-        <option value='friend'>x</option>
-      </select>
-      <Button>split bill</Button>
-    </form>
   )
 }
