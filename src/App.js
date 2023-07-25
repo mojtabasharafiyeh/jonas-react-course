@@ -28,10 +28,8 @@ export default function App() {
   const [data, setData] = useState(initialFriends)
   const [showForm, setShowform] = useState(false)
   const [selectedFriend, setSelectedFriend] = useState(null)
-  const [bill, setbill] = useState(null)
   const [yourExpense, setyourExpense] = useState(null)
   const [pay, setPay] = useState('user')
-  const friendBill = bill - yourExpense
   function setdataHandler(dataPassed) {
     setData((data) => [...data, dataPassed])
   }
@@ -41,12 +39,11 @@ export default function App() {
   function hideFormHandler() {
     setShowform(false)
   }
-  function clickButtonHandler(name) {
-    setSelectedFriend(name)
+  function clickButtonHandler(item) {
+    console.log(item)
+    setSelectedFriend(() => item)
   }
-  function billHandler(b) {
-    setbill(b)
-  }
+
   function yourHandler(your) {
     setyourExpense(your)
   }
@@ -85,15 +82,13 @@ export default function App() {
       </div>
       {selectedFriend && (
         <FormSplitBill
-          selectedFriend={selectedFriend}
-          bill={bill}
-          billHandle={billHandler}
+          selectedFriend={selectedFriend.name}
           yourExpense={yourExpense}
           yourHandle={yourHandler}
-          friendBill={friendBill}
           submitHandle={submitHandler}
           pay={pay}
           payHandle={payHandler}
+          key={selectedFriend.id}
         ></FormSplitBill>
       )}
     </div>
